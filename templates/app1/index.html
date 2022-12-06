@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+{% block b1 %}
+    {{msg}}
+    {% if form %}
+    <form action="" method="post">
+        {% csrf_token %}
+        {{form.as_p}}
+        <input type="submit" value="submit">
+    </form>
+    {% endif %}
+    {% if Car %}
+        <table>
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>C_Name</th>
+                    <th>Color</th>
+                    <th>Price</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for i in Car  %}
+                <tr>
+                    <td>{{i.id}}</td>
+                    <td>{{i.c_name}}</td>
+                    <td>{{i.Color}}</td>
+                    <td>{{i.price}}</td>
+                    <td>
+                        <a href="{% url 'app1:update' i.id %}">update</a>
+                        <form action="{% url 'app1:delete' i.id %}" method="post">
+                            {% csrf_token %}
+                            <input type="submit" value="delete">
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% endif %}
+{% endblock b1 %}
